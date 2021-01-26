@@ -31,7 +31,7 @@ module
 // #completionTest(24,25) -> object
 module missingValue '' = 
 //@[20:22) [BCP050 (Error)] The specified module path is empty. |''|
-//@[25:25) [BCP118 (Error)] Expected the "{" character or the "if" keyword at this location. ||
+//@[25:25) [BCP118 (Error)] Expected the "{" character, the "[" character, or the "if" keyword at this location. ||
 
 var interp = 'hello'
 module moduleWithInterpPath './${interp}.bicep' = {
@@ -315,7 +315,7 @@ module completionB ''
 // #completionTest(19, 20, 21) -> cwdCompletions
 module completionC '' =
 //@[19:21) [BCP050 (Error)] The specified module path is empty. |''|
-//@[23:23) [BCP118 (Error)] Expected the "{" character or the "if" keyword at this location. ||
+//@[23:23) [BCP118 (Error)] Expected the "{" character, the "[" character, or the "if" keyword at this location. ||
 
 // #completionTest(19, 20, 21) -> cwdCompletions
 module completionD '' = {}

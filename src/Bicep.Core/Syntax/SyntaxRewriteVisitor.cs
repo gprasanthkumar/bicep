@@ -552,6 +552,27 @@ namespace Bicep.Core.Syntax
         }
         void ISyntaxVisitor.VisitIfConditionSyntax(IfConditionSyntax syntax) => ReplaceCurrent(syntax, ReplaceIfExpressionSyntax);
 
+        protected virtual ForSyntax ReplaceForSyntax(ForSyntax syntax)
+        {
+            var hasChanges = Rewrite(syntax.OpenSquare, out var openSquare);
+            hasChanges |= Rewrite(syntax.ForKeyword, out var forKeyword);
+            hasChanges |= Rewrite(syntax.Identifier, out var identifier);
+            hasChanges |= Rewrite(syntax.InKeyword, out var inKeyword);
+            hasChanges |= Rewrite(syntax.Expression, out var expression);
+            hasChanges |= Rewrite(syntax.Colon, out var colon);
+            hasChanges |= Rewrite(syntax.Body, out var body);
+            hasChanges |= Rewrite(syntax.CloseSquare, out var closeSquare);
+
+            if (!hasChanges)
+            {
+                return syntax;
+            }
+
+            return new ForSyntax(openSquare, forKeyword, identifier, inKeyword, expression, colon, body, closeSquare);
+        }
+
+        void ISyntaxVisitor.VisitForSyntax(ForSyntax syntax) => ReplaceCurrent(syntax, ReplaceForSyntax);
+
         protected virtual DecoratorSyntax ReplaceDecoratorSyntax(DecoratorSyntax syntax)
         {
             var hasChanges = Rewrite(syntax.At, out var at);

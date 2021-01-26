@@ -70,6 +70,8 @@ namespace Bicep.Core.Syntax
 
         void VisitIfConditionSyntax(IfConditionSyntax syntax);
 
+        void VisitForSyntax(ForSyntax syntax);
+
         void VisitDecoratorSyntax(DecoratorSyntax syntax);
 
         void VisitMissingDeclarationSyntax(MissingDeclarationSyntax syntax);
