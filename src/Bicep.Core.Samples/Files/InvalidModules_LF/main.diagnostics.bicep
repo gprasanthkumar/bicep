@@ -369,3 +369,64 @@ module moduleWithNotAttachableDecorators './empty.bicep' = {
   name: 'moduleWithNotAttachableDecorators'
 }
 
+// loop parsing cases
+module expectedForKeyword 'modulea.bicep' = []
+//@[45:46) [BCP012 (Error)] Expected the "for" keyword at this location. |]|
+
+module expectedForKeyword2 'modulea.bicep' = [f]
+//@[46:47) [BCP012 (Error)] Expected the "for" keyword at this location. |f|
+
+module expectedLoopVar 'modulea.bicep' = [for]
+//@[41:46) [BCP043 (Error)] This is not a valid expression. |[for]|
+//@[45:46) [BCP133 (Error)] Expected a loop variable identifier at this location. |]|
+
+module expectedInKeyword 'modulea.bicep' = [for x]
+//@[43:50) [BCP043 (Error)] This is not a valid expression. |[for x]|
+//@[49:50) [BCP012 (Error)] Expected the "in" keyword at this location. |]|
+
+module expectedInKeyword2 'modulea.bicep' = [for x b]
+//@[44:53) [BCP043 (Error)] This is not a valid expression. |[for x b]|
+//@[51:52) [BCP012 (Error)] Expected the "in" keyword at this location. |b|
+//@[52:53) [BCP009 (Error)] Expected a literal value, an array, an object, a parenthesized expression, or a function call at this location. |]|
+
+module expectedArrayExpression 'modulea.bicep' = [for x in]
+//@[49:59) [BCP043 (Error)] This is not a valid expression. |[for x in]|
+//@[58:59) [BCP009 (Error)] Expected a literal value, an array, an object, a parenthesized expression, or a function call at this location. |]|
+
+module expectedColon 'modulea.bicep' = [for x in y]
+//@[39:51) [BCP043 (Error)] This is not a valid expression. |[for x in y]|
+//@[50:51) [BCP018 (Error)] Expected the ":" character at this location. |]|
+
+module expectedLoopBody 'modulea.bicep' = [for x in y:]
+//@[42:55) [BCP043 (Error)] This is not a valid expression. |[for x in y:]|
+//@[54:55) [BCP009 (Error)] Expected a literal value, an array, an object, a parenthesized expression, or a function call at this location. |]|
+
+// loop semantic analysis cases
+module wrongLoopBodyType 'modulea.bicep' = [for x in y:4]
+//@[43:57) [BCP043 (Error)] This is not a valid expression. |[for x in y:4]|
+
+module missingLoopBodyProperties 'modulea.bicep' = [for x in y:{
+//@[51:68) [BCP043 (Error)] This is not a valid expression. |[for x in y:{\n\n}]|
+
+}]
+
+// valid loop - this should be moved to Modules_* test case after E2E works
+var myModules = [
+  {
+    name: 'one'
+    location: 'eastus2'
+  }
+  {
+    name: 'two'
+    location: 'westus'
+  }
+]
+module storageResources 'modulea.bicep' = [for module in myModules: {
+//@[42:182) [BCP043 (Error)] This is not a valid expression. |[for module in myModules: {\n  name: module.name\n  params: {\n    arrayParam: []\n    objParam: module\n    stringParamB: module.location\n  }\n}]|
+  name: module.name
+  params: {
+    arrayParam: []
+    objParam: module
+    stringParamB: module.location
+  }
+}]

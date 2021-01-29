@@ -1086,6 +1086,227 @@ module moduleWithNotAttachableDecorators './empty.bicep' = {
 //@[43:44) NewLine |\n|
 }
 //@[0:1) RightBrace |}|
-//@[1:2) NewLine |\n|
+//@[1:3) NewLine |\n\n|
 
-//@[0:0) EndOfFile ||
+// loop parsing cases
+//@[21:22) NewLine |\n|
+module expectedForKeyword 'modulea.bicep' = []
+//@[0:6) Identifier |module|
+//@[7:25) Identifier |expectedForKeyword|
+//@[26:41) StringComplete |'modulea.bicep'|
+//@[42:43) Assignment |=|
+//@[44:45) LeftSquare |[|
+//@[45:46) RightSquare |]|
+//@[46:48) NewLine |\n\n|
+
+module expectedForKeyword2 'modulea.bicep' = [f]
+//@[0:6) Identifier |module|
+//@[7:26) Identifier |expectedForKeyword2|
+//@[27:42) StringComplete |'modulea.bicep'|
+//@[43:44) Assignment |=|
+//@[45:46) LeftSquare |[|
+//@[46:47) Identifier |f|
+//@[47:48) RightSquare |]|
+//@[48:50) NewLine |\n\n|
+
+module expectedLoopVar 'modulea.bicep' = [for]
+//@[0:6) Identifier |module|
+//@[7:22) Identifier |expectedLoopVar|
+//@[23:38) StringComplete |'modulea.bicep'|
+//@[39:40) Assignment |=|
+//@[41:42) LeftSquare |[|
+//@[42:45) Identifier |for|
+//@[45:46) RightSquare |]|
+//@[46:48) NewLine |\n\n|
+
+module expectedInKeyword 'modulea.bicep' = [for x]
+//@[0:6) Identifier |module|
+//@[7:24) Identifier |expectedInKeyword|
+//@[25:40) StringComplete |'modulea.bicep'|
+//@[41:42) Assignment |=|
+//@[43:44) LeftSquare |[|
+//@[44:47) Identifier |for|
+//@[48:49) Identifier |x|
+//@[49:50) RightSquare |]|
+//@[50:52) NewLine |\n\n|
+
+module expectedInKeyword2 'modulea.bicep' = [for x b]
+//@[0:6) Identifier |module|
+//@[7:25) Identifier |expectedInKeyword2|
+//@[26:41) StringComplete |'modulea.bicep'|
+//@[42:43) Assignment |=|
+//@[44:45) LeftSquare |[|
+//@[45:48) Identifier |for|
+//@[49:50) Identifier |x|
+//@[51:52) Identifier |b|
+//@[52:53) RightSquare |]|
+//@[53:55) NewLine |\n\n|
+
+module expectedArrayExpression 'modulea.bicep' = [for x in]
+//@[0:6) Identifier |module|
+//@[7:30) Identifier |expectedArrayExpression|
+//@[31:46) StringComplete |'modulea.bicep'|
+//@[47:48) Assignment |=|
+//@[49:50) LeftSquare |[|
+//@[50:53) Identifier |for|
+//@[54:55) Identifier |x|
+//@[56:58) Identifier |in|
+//@[58:59) RightSquare |]|
+//@[59:61) NewLine |\n\n|
+
+module expectedColon 'modulea.bicep' = [for x in y]
+//@[0:6) Identifier |module|
+//@[7:20) Identifier |expectedColon|
+//@[21:36) StringComplete |'modulea.bicep'|
+//@[37:38) Assignment |=|
+//@[39:40) LeftSquare |[|
+//@[40:43) Identifier |for|
+//@[44:45) Identifier |x|
+//@[46:48) Identifier |in|
+//@[49:50) Identifier |y|
+//@[50:51) RightSquare |]|
+//@[51:53) NewLine |\n\n|
+
+module expectedLoopBody 'modulea.bicep' = [for x in y:]
+//@[0:6) Identifier |module|
+//@[7:23) Identifier |expectedLoopBody|
+//@[24:39) StringComplete |'modulea.bicep'|
+//@[40:41) Assignment |=|
+//@[42:43) LeftSquare |[|
+//@[43:46) Identifier |for|
+//@[47:48) Identifier |x|
+//@[49:51) Identifier |in|
+//@[52:53) Identifier |y|
+//@[53:54) Colon |:|
+//@[54:55) RightSquare |]|
+//@[55:57) NewLine |\n\n|
+
+// loop semantic analysis cases
+//@[31:32) NewLine |\n|
+module wrongLoopBodyType 'modulea.bicep' = [for x in y:4]
+//@[0:6) Identifier |module|
+//@[7:24) Identifier |wrongLoopBodyType|
+//@[25:40) StringComplete |'modulea.bicep'|
+//@[41:42) Assignment |=|
+//@[43:44) LeftSquare |[|
+//@[44:47) Identifier |for|
+//@[48:49) Identifier |x|
+//@[50:52) Identifier |in|
+//@[53:54) Identifier |y|
+//@[54:55) Colon |:|
+//@[55:56) Integer |4|
+//@[56:57) RightSquare |]|
+//@[57:59) NewLine |\n\n|
+
+module missingLoopBodyProperties 'modulea.bicep' = [for x in y:{
+//@[0:6) Identifier |module|
+//@[7:32) Identifier |missingLoopBodyProperties|
+//@[33:48) StringComplete |'modulea.bicep'|
+//@[49:50) Assignment |=|
+//@[51:52) LeftSquare |[|
+//@[52:55) Identifier |for|
+//@[56:57) Identifier |x|
+//@[58:60) Identifier |in|
+//@[61:62) Identifier |y|
+//@[62:63) Colon |:|
+//@[63:64) LeftBrace |{|
+//@[64:66) NewLine |\n\n|
+
+}]
+//@[0:1) RightBrace |}|
+//@[1:2) RightSquare |]|
+//@[2:4) NewLine |\n\n|
+
+// valid loop - this should be moved to Modules_* test case after E2E works
+//@[75:76) NewLine |\n|
+var myModules = [
+//@[0:3) Identifier |var|
+//@[4:13) Identifier |myModules|
+//@[14:15) Assignment |=|
+//@[16:17) LeftSquare |[|
+//@[17:18) NewLine |\n|
+  {
+//@[2:3) LeftBrace |{|
+//@[3:4) NewLine |\n|
+    name: 'one'
+//@[4:8) Identifier |name|
+//@[8:9) Colon |:|
+//@[10:15) StringComplete |'one'|
+//@[15:16) NewLine |\n|
+    location: 'eastus2'
+//@[4:12) Identifier |location|
+//@[12:13) Colon |:|
+//@[14:23) StringComplete |'eastus2'|
+//@[23:24) NewLine |\n|
+  }
+//@[2:3) RightBrace |}|
+//@[3:4) NewLine |\n|
+  {
+//@[2:3) LeftBrace |{|
+//@[3:4) NewLine |\n|
+    name: 'two'
+//@[4:8) Identifier |name|
+//@[8:9) Colon |:|
+//@[10:15) StringComplete |'two'|
+//@[15:16) NewLine |\n|
+    location: 'westus'
+//@[4:12) Identifier |location|
+//@[12:13) Colon |:|
+//@[14:22) StringComplete |'westus'|
+//@[22:23) NewLine |\n|
+  }
+//@[2:3) RightBrace |}|
+//@[3:4) NewLine |\n|
+]
+//@[0:1) RightSquare |]|
+//@[1:2) NewLine |\n|
+module storageResources 'modulea.bicep' = [for module in myModules: {
+//@[0:6) Identifier |module|
+//@[7:23) Identifier |storageResources|
+//@[24:39) StringComplete |'modulea.bicep'|
+//@[40:41) Assignment |=|
+//@[42:43) LeftSquare |[|
+//@[43:46) Identifier |for|
+//@[47:53) Identifier |module|
+//@[54:56) Identifier |in|
+//@[57:66) Identifier |myModules|
+//@[66:67) Colon |:|
+//@[68:69) LeftBrace |{|
+//@[69:70) NewLine |\n|
+  name: module.name
+//@[2:6) Identifier |name|
+//@[6:7) Colon |:|
+//@[8:14) Identifier |module|
+//@[14:15) Dot |.|
+//@[15:19) Identifier |name|
+//@[19:20) NewLine |\n|
+  params: {
+//@[2:8) Identifier |params|
+//@[8:9) Colon |:|
+//@[10:11) LeftBrace |{|
+//@[11:12) NewLine |\n|
+    arrayParam: []
+//@[4:14) Identifier |arrayParam|
+//@[14:15) Colon |:|
+//@[16:17) LeftSquare |[|
+//@[17:18) RightSquare |]|
+//@[18:19) NewLine |\n|
+    objParam: module
+//@[4:12) Identifier |objParam|
+//@[12:13) Colon |:|
+//@[14:20) Identifier |module|
+//@[20:21) NewLine |\n|
+    stringParamB: module.location
+//@[4:16) Identifier |stringParamB|
+//@[16:17) Colon |:|
+//@[18:24) Identifier |module|
+//@[24:25) Dot |.|
+//@[25:33) Identifier |location|
+//@[33:34) NewLine |\n|
+  }
+//@[2:3) RightBrace |}|
+//@[3:4) NewLine |\n|
+}]
+//@[0:1) RightBrace |}|
+//@[1:2) RightSquare |]|
+//@[2:2) EndOfFile ||

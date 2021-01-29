@@ -1649,6 +1649,353 @@ module moduleWithNotAttachableDecorators './empty.bicep' = {
 //@[43:44)   NewLine |\n|
 }
 //@[0:1)   RightBrace |}|
-//@[1:2) NewLine |\n|
+//@[1:3) NewLine |\n\n|
 
-//@[0:0) EndOfFile ||
+// loop parsing cases
+//@[21:22) NewLine |\n|
+module expectedForKeyword 'modulea.bicep' = []
+//@[0:46) ModuleDeclarationSyntax
+//@[0:6)  Identifier |module|
+//@[7:25)  IdentifierSyntax
+//@[7:25)   Identifier |expectedForKeyword|
+//@[26:41)  StringSyntax
+//@[26:41)   StringComplete |'modulea.bicep'|
+//@[42:43)  Assignment |=|
+//@[44:46)  SkippedTriviaSyntax
+//@[44:45)   LeftSquare |[|
+//@[45:46)   RightSquare |]|
+//@[46:48) NewLine |\n\n|
+
+module expectedForKeyword2 'modulea.bicep' = [f]
+//@[0:48) ModuleDeclarationSyntax
+//@[0:6)  Identifier |module|
+//@[7:26)  IdentifierSyntax
+//@[7:26)   Identifier |expectedForKeyword2|
+//@[27:42)  StringSyntax
+//@[27:42)   StringComplete |'modulea.bicep'|
+//@[43:44)  Assignment |=|
+//@[45:48)  SkippedTriviaSyntax
+//@[45:46)   LeftSquare |[|
+//@[46:47)   Identifier |f|
+//@[47:48)   RightSquare |]|
+//@[48:50) NewLine |\n\n|
+
+module expectedLoopVar 'modulea.bicep' = [for]
+//@[0:46) ModuleDeclarationSyntax
+//@[0:6)  Identifier |module|
+//@[7:22)  IdentifierSyntax
+//@[7:22)   Identifier |expectedLoopVar|
+//@[23:38)  StringSyntax
+//@[23:38)   StringComplete |'modulea.bicep'|
+//@[39:40)  Assignment |=|
+//@[41:46)  ForSyntax
+//@[41:42)   LeftSquare |[|
+//@[42:45)   Identifier |for|
+//@[45:45)   IdentifierSyntax
+//@[45:45)    SkippedTriviaSyntax
+//@[45:45)   SkippedTriviaSyntax
+//@[45:45)   SkippedTriviaSyntax
+//@[45:45)   SkippedTriviaSyntax
+//@[45:45)   SkippedTriviaSyntax
+//@[45:46)   RightSquare |]|
+//@[46:48) NewLine |\n\n|
+
+module expectedInKeyword 'modulea.bicep' = [for x]
+//@[0:50) ModuleDeclarationSyntax
+//@[0:6)  Identifier |module|
+//@[7:24)  IdentifierSyntax
+//@[7:24)   Identifier |expectedInKeyword|
+//@[25:40)  StringSyntax
+//@[25:40)   StringComplete |'modulea.bicep'|
+//@[41:42)  Assignment |=|
+//@[43:50)  ForSyntax
+//@[43:44)   LeftSquare |[|
+//@[44:47)   Identifier |for|
+//@[48:49)   IdentifierSyntax
+//@[48:49)    Identifier |x|
+//@[49:49)   SkippedTriviaSyntax
+//@[49:49)   SkippedTriviaSyntax
+//@[49:49)   SkippedTriviaSyntax
+//@[49:49)   SkippedTriviaSyntax
+//@[49:50)   RightSquare |]|
+//@[50:52) NewLine |\n\n|
+
+module expectedInKeyword2 'modulea.bicep' = [for x b]
+//@[0:53) ModuleDeclarationSyntax
+//@[0:6)  Identifier |module|
+//@[7:25)  IdentifierSyntax
+//@[7:25)   Identifier |expectedInKeyword2|
+//@[26:41)  StringSyntax
+//@[26:41)   StringComplete |'modulea.bicep'|
+//@[42:43)  Assignment |=|
+//@[44:53)  ForSyntax
+//@[44:45)   LeftSquare |[|
+//@[45:48)   Identifier |for|
+//@[49:50)   IdentifierSyntax
+//@[49:50)    Identifier |x|
+//@[51:52)   SkippedTriviaSyntax
+//@[51:52)    Identifier |b|
+//@[52:52)   SkippedTriviaSyntax
+//@[52:52)   SkippedTriviaSyntax
+//@[52:52)   SkippedTriviaSyntax
+//@[52:53)   RightSquare |]|
+//@[53:55) NewLine |\n\n|
+
+module expectedArrayExpression 'modulea.bicep' = [for x in]
+//@[0:59) ModuleDeclarationSyntax
+//@[0:6)  Identifier |module|
+//@[7:30)  IdentifierSyntax
+//@[7:30)   Identifier |expectedArrayExpression|
+//@[31:46)  StringSyntax
+//@[31:46)   StringComplete |'modulea.bicep'|
+//@[47:48)  Assignment |=|
+//@[49:59)  ForSyntax
+//@[49:50)   LeftSquare |[|
+//@[50:53)   Identifier |for|
+//@[54:55)   IdentifierSyntax
+//@[54:55)    Identifier |x|
+//@[56:58)   Identifier |in|
+//@[58:58)   SkippedTriviaSyntax
+//@[58:58)   SkippedTriviaSyntax
+//@[58:58)   SkippedTriviaSyntax
+//@[58:59)   RightSquare |]|
+//@[59:61) NewLine |\n\n|
+
+module expectedColon 'modulea.bicep' = [for x in y]
+//@[0:51) ModuleDeclarationSyntax
+//@[0:6)  Identifier |module|
+//@[7:20)  IdentifierSyntax
+//@[7:20)   Identifier |expectedColon|
+//@[21:36)  StringSyntax
+//@[21:36)   StringComplete |'modulea.bicep'|
+//@[37:38)  Assignment |=|
+//@[39:51)  ForSyntax
+//@[39:40)   LeftSquare |[|
+//@[40:43)   Identifier |for|
+//@[44:45)   IdentifierSyntax
+//@[44:45)    Identifier |x|
+//@[46:48)   Identifier |in|
+//@[49:50)   VariableAccessSyntax
+//@[49:50)    IdentifierSyntax
+//@[49:50)     Identifier |y|
+//@[50:50)   SkippedTriviaSyntax
+//@[50:50)   SkippedTriviaSyntax
+//@[50:51)   RightSquare |]|
+//@[51:53) NewLine |\n\n|
+
+module expectedLoopBody 'modulea.bicep' = [for x in y:]
+//@[0:55) ModuleDeclarationSyntax
+//@[0:6)  Identifier |module|
+//@[7:23)  IdentifierSyntax
+//@[7:23)   Identifier |expectedLoopBody|
+//@[24:39)  StringSyntax
+//@[24:39)   StringComplete |'modulea.bicep'|
+//@[40:41)  Assignment |=|
+//@[42:55)  ForSyntax
+//@[42:43)   LeftSquare |[|
+//@[43:46)   Identifier |for|
+//@[47:48)   IdentifierSyntax
+//@[47:48)    Identifier |x|
+//@[49:51)   Identifier |in|
+//@[52:53)   VariableAccessSyntax
+//@[52:53)    IdentifierSyntax
+//@[52:53)     Identifier |y|
+//@[53:54)   Colon |:|
+//@[54:54)   SkippedTriviaSyntax
+//@[54:55)   RightSquare |]|
+//@[55:57) NewLine |\n\n|
+
+// loop semantic analysis cases
+//@[31:32) NewLine |\n|
+module wrongLoopBodyType 'modulea.bicep' = [for x in y:4]
+//@[0:57) ModuleDeclarationSyntax
+//@[0:6)  Identifier |module|
+//@[7:24)  IdentifierSyntax
+//@[7:24)   Identifier |wrongLoopBodyType|
+//@[25:40)  StringSyntax
+//@[25:40)   StringComplete |'modulea.bicep'|
+//@[41:42)  Assignment |=|
+//@[43:57)  ForSyntax
+//@[43:44)   LeftSquare |[|
+//@[44:47)   Identifier |for|
+//@[48:49)   IdentifierSyntax
+//@[48:49)    Identifier |x|
+//@[50:52)   Identifier |in|
+//@[53:54)   VariableAccessSyntax
+//@[53:54)    IdentifierSyntax
+//@[53:54)     Identifier |y|
+//@[54:55)   Colon |:|
+//@[55:56)   IntegerLiteralSyntax
+//@[55:56)    Integer |4|
+//@[56:57)   RightSquare |]|
+//@[57:59) NewLine |\n\n|
+
+module missingLoopBodyProperties 'modulea.bicep' = [for x in y:{
+//@[0:68) ModuleDeclarationSyntax
+//@[0:6)  Identifier |module|
+//@[7:32)  IdentifierSyntax
+//@[7:32)   Identifier |missingLoopBodyProperties|
+//@[33:48)  StringSyntax
+//@[33:48)   StringComplete |'modulea.bicep'|
+//@[49:50)  Assignment |=|
+//@[51:68)  ForSyntax
+//@[51:52)   LeftSquare |[|
+//@[52:55)   Identifier |for|
+//@[56:57)   IdentifierSyntax
+//@[56:57)    Identifier |x|
+//@[58:60)   Identifier |in|
+//@[61:62)   VariableAccessSyntax
+//@[61:62)    IdentifierSyntax
+//@[61:62)     Identifier |y|
+//@[62:63)   Colon |:|
+//@[63:67)   ObjectSyntax
+//@[63:64)    LeftBrace |{|
+//@[64:66)    NewLine |\n\n|
+
+}]
+//@[0:1)    RightBrace |}|
+//@[1:2)   RightSquare |]|
+//@[2:4) NewLine |\n\n|
+
+// valid loop - this should be moved to Modules_* test case after E2E works
+//@[75:76) NewLine |\n|
+var myModules = [
+//@[0:114) VariableDeclarationSyntax
+//@[0:3)  Identifier |var|
+//@[4:13)  IdentifierSyntax
+//@[4:13)   Identifier |myModules|
+//@[14:15)  Assignment |=|
+//@[16:114)  ArraySyntax
+//@[16:17)   LeftSquare |[|
+//@[17:18)   NewLine |\n|
+  {
+//@[2:47)   ArrayItemSyntax
+//@[2:47)    ObjectSyntax
+//@[2:3)     LeftBrace |{|
+//@[3:4)     NewLine |\n|
+    name: 'one'
+//@[4:15)     ObjectPropertySyntax
+//@[4:8)      IdentifierSyntax
+//@[4:8)       Identifier |name|
+//@[8:9)      Colon |:|
+//@[10:15)      StringSyntax
+//@[10:15)       StringComplete |'one'|
+//@[15:16)     NewLine |\n|
+    location: 'eastus2'
+//@[4:23)     ObjectPropertySyntax
+//@[4:12)      IdentifierSyntax
+//@[4:12)       Identifier |location|
+//@[12:13)      Colon |:|
+//@[14:23)      StringSyntax
+//@[14:23)       StringComplete |'eastus2'|
+//@[23:24)     NewLine |\n|
+  }
+//@[2:3)     RightBrace |}|
+//@[3:4)   NewLine |\n|
+  {
+//@[2:46)   ArrayItemSyntax
+//@[2:46)    ObjectSyntax
+//@[2:3)     LeftBrace |{|
+//@[3:4)     NewLine |\n|
+    name: 'two'
+//@[4:15)     ObjectPropertySyntax
+//@[4:8)      IdentifierSyntax
+//@[4:8)       Identifier |name|
+//@[8:9)      Colon |:|
+//@[10:15)      StringSyntax
+//@[10:15)       StringComplete |'two'|
+//@[15:16)     NewLine |\n|
+    location: 'westus'
+//@[4:22)     ObjectPropertySyntax
+//@[4:12)      IdentifierSyntax
+//@[4:12)       Identifier |location|
+//@[12:13)      Colon |:|
+//@[14:22)      StringSyntax
+//@[14:22)       StringComplete |'westus'|
+//@[22:23)     NewLine |\n|
+  }
+//@[2:3)     RightBrace |}|
+//@[3:4)   NewLine |\n|
+]
+//@[0:1)   RightSquare |]|
+//@[1:2) NewLine |\n|
+module storageResources 'modulea.bicep' = [for module in myModules: {
+//@[0:182) ModuleDeclarationSyntax
+//@[0:6)  Identifier |module|
+//@[7:23)  IdentifierSyntax
+//@[7:23)   Identifier |storageResources|
+//@[24:39)  StringSyntax
+//@[24:39)   StringComplete |'modulea.bicep'|
+//@[40:41)  Assignment |=|
+//@[42:182)  ForSyntax
+//@[42:43)   LeftSquare |[|
+//@[43:46)   Identifier |for|
+//@[47:53)   IdentifierSyntax
+//@[47:53)    Identifier |module|
+//@[54:56)   Identifier |in|
+//@[57:66)   VariableAccessSyntax
+//@[57:66)    IdentifierSyntax
+//@[57:66)     Identifier |myModules|
+//@[66:67)   Colon |:|
+//@[68:181)   ObjectSyntax
+//@[68:69)    LeftBrace |{|
+//@[69:70)    NewLine |\n|
+  name: module.name
+//@[2:19)    ObjectPropertySyntax
+//@[2:6)     IdentifierSyntax
+//@[2:6)      Identifier |name|
+//@[6:7)     Colon |:|
+//@[8:19)     PropertyAccessSyntax
+//@[8:14)      VariableAccessSyntax
+//@[8:14)       IdentifierSyntax
+//@[8:14)        Identifier |module|
+//@[14:15)      Dot |.|
+//@[15:19)      IdentifierSyntax
+//@[15:19)       Identifier |name|
+//@[19:20)    NewLine |\n|
+  params: {
+//@[2:89)    ObjectPropertySyntax
+//@[2:8)     IdentifierSyntax
+//@[2:8)      Identifier |params|
+//@[8:9)     Colon |:|
+//@[10:89)     ObjectSyntax
+//@[10:11)      LeftBrace |{|
+//@[11:12)      NewLine |\n|
+    arrayParam: []
+//@[4:18)      ObjectPropertySyntax
+//@[4:14)       IdentifierSyntax
+//@[4:14)        Identifier |arrayParam|
+//@[14:15)       Colon |:|
+//@[16:18)       ArraySyntax
+//@[16:17)        LeftSquare |[|
+//@[17:18)        RightSquare |]|
+//@[18:19)      NewLine |\n|
+    objParam: module
+//@[4:20)      ObjectPropertySyntax
+//@[4:12)       IdentifierSyntax
+//@[4:12)        Identifier |objParam|
+//@[12:13)       Colon |:|
+//@[14:20)       VariableAccessSyntax
+//@[14:20)        IdentifierSyntax
+//@[14:20)         Identifier |module|
+//@[20:21)      NewLine |\n|
+    stringParamB: module.location
+//@[4:33)      ObjectPropertySyntax
+//@[4:16)       IdentifierSyntax
+//@[4:16)        Identifier |stringParamB|
+//@[16:17)       Colon |:|
+//@[18:33)       PropertyAccessSyntax
+//@[18:24)        VariableAccessSyntax
+//@[18:24)         IdentifierSyntax
+//@[18:24)          Identifier |module|
+//@[24:25)        Dot |.|
+//@[25:33)        IdentifierSyntax
+//@[25:33)         Identifier |location|
+//@[33:34)      NewLine |\n|
+  }
+//@[2:3)      RightBrace |}|
+//@[3:4)    NewLine |\n|
+}]
+//@[0:1)    RightBrace |}|
+//@[1:2)   RightSquare |]|
+//@[2:2) EndOfFile ||
