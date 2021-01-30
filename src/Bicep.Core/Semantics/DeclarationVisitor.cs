@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 using System.Collections.Generic;
+using Bicep.Core.Extensions;
 using Bicep.Core.Syntax;
 
 namespace Bicep.Core.Semantics
@@ -11,10 +12,13 @@ namespace Bicep.Core.Semantics
 
         private readonly IList<DeclaredSymbol> declaredSymbols;
 
-        public DeclarationVisitor(ISymbolContext context, IList<DeclaredSymbol> declaredSymbols)
+        private readonly IList<LocalScope> symbolScopes; 
+
+        public DeclarationVisitor(ISymbolContext context, IList<DeclaredSymbol> declaredSymbols, IList<LocalScope> symbolScopes)
         {
             this.context = context;
             this.declaredSymbols = declaredSymbols;
+            this.symbolScopes = symbolScopes;
         }
 
         public override void VisitParameterDeclarationSyntax(ParameterDeclarationSyntax syntax)
@@ -55,6 +59,15 @@ namespace Bicep.Core.Semantics
 
             var symbol = new OutputSymbol(this.context, syntax.Name.IdentifierName, syntax, syntax.Value);
             this.declaredSymbols.Add(symbol);
+        }
+
+        public override void VisitForSyntax(ForSyntax syntax)
+        {
+            base.VisitForSyntax(syntax);
+
+            var itemVariable = new LocalSymbol(this.context, syntax.Identifier.IdentifierName, syntax.Identifier);
+            var scope = new LocalScope(syntax, itemVariable.AsEnumerable());
+            this.symbolScopes.Add(scope);
         }
     }
 }
