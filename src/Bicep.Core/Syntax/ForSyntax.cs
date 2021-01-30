@@ -10,7 +10,7 @@ namespace Bicep.Core.Syntax
         public ForSyntax(
             Token openSquare,
             Token forKeyword,
-            IdentifierSyntax identifier,
+            LocalVariableSyntax itemVariable,
             SyntaxBase inKeyword,
             SyntaxBase expression,
             SyntaxBase colon,
@@ -28,7 +28,7 @@ namespace Bicep.Core.Syntax
             
             this.OpenSquare = openSquare;
             this.ForKeyword = forKeyword;
-            this.Identifier = identifier;
+            this.ItemVariable = itemVariable;
             this.InKeyword = inKeyword;
             this.Expression = expression;
             this.Colon = colon;
@@ -40,7 +40,7 @@ namespace Bicep.Core.Syntax
 
         public Token ForKeyword { get; }
 
-        public IdentifierSyntax Identifier { get; }
+        public LocalVariableSyntax ItemVariable { get; }
 
         public SyntaxBase InKeyword { get; }
 

@@ -12,13 +12,13 @@ namespace Bicep.Core.Semantics
 
         private readonly IList<DeclaredSymbol> declaredSymbols;
 
-        private readonly IList<LocalScope> symbolScopes; 
+        private readonly IDictionary<SyntaxBase, LocalScope> localScopes; 
 
-        public DeclarationVisitor(ISymbolContext context, IList<DeclaredSymbol> declaredSymbols, IList<LocalScope> symbolScopes)
+        public DeclarationVisitor(ISymbolContext context, IList<DeclaredSymbol> declaredSymbols, IDictionary<SyntaxBase, LocalScope> localScopes)
         {
             this.context = context;
             this.declaredSymbols = declaredSymbols;
-            this.symbolScopes = symbolScopes;
+            this.localScopes = localScopes;
         }
 
         public override void VisitParameterDeclarationSyntax(ParameterDeclarationSyntax syntax)
@@ -65,9 +65,9 @@ namespace Bicep.Core.Semantics
         {
             base.VisitForSyntax(syntax);
 
-            var itemVariable = new LocalSymbol(this.context, syntax.Identifier.IdentifierName, syntax.Identifier);
+            var itemVariable = new LocalSymbol(this.context, syntax.ItemVariable.Name.IdentifierName, syntax.ItemVariable);
             var scope = new LocalScope(syntax, itemVariable.AsEnumerable());
-            this.symbolScopes.Add(scope);
+            this.localScopes.Add(syntax, scope);
         }
     }
 }

@@ -876,8 +876,8 @@ namespace Bicep.Core.Parsing
         {
             var openBracket = this.Expect(TokenType.LeftSquare, b => b.ExpectedCharacter("["));
             var forKeyword = this.ExpectKeyword(LanguageConstants.ForKeyword);
-            var identifier = this.IdentifierWithRecovery(b => b.ExpectedLoopVariableIdentifier(), TokenType.Identifier, TokenType.RightSquare, TokenType.NewLine);
-            var inKeyword = this.WithRecovery(() => this.ExpectKeyword(LanguageConstants.InKeyword), GetSuppressionFlag(identifier), TokenType.RightSquare, TokenType.NewLine);
+            var identifier = new LocalVariableSyntax(this.IdentifierWithRecovery(b => b.ExpectedLoopVariableIdentifier(), TokenType.Identifier, TokenType.RightSquare, TokenType.NewLine));
+            var inKeyword = this.WithRecovery(() => this.ExpectKeyword(LanguageConstants.InKeyword), GetSuppressionFlag(identifier.Name), TokenType.RightSquare, TokenType.NewLine);
             var expression = this.WithRecovery(() => this.Expression(allowComplexLiterals: true), GetSuppressionFlag(inKeyword), TokenType.Colon, TokenType.RightSquare, TokenType.NewLine);
             var colon = this.WithRecovery(() => this.Expect(TokenType.Colon, b => b.ExpectedCharacter(":")), GetSuppressionFlag(expression), TokenType.RightSquare, TokenType.NewLine);
             var body = this.WithRecovery(() => this.Expression(allowComplexLiterals: true), GetSuppressionFlag(colon), TokenType.RightSquare, TokenType.NewLine);

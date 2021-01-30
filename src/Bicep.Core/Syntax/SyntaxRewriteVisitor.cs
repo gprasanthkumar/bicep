@@ -143,6 +143,19 @@ namespace Bicep.Core.Syntax
         }
         void ISyntaxVisitor.VisitVariableDeclarationSyntax(VariableDeclarationSyntax syntax) => ReplaceCurrent(syntax, ReplaceVariableDeclarationSyntax);
 
+        protected virtual LocalVariableSyntax ReplaceLocalVariableSyntax(LocalVariableSyntax syntax)
+        {
+            var hasChanges = Rewrite(syntax.Name, out var name);
+            if (!hasChanges)
+            {
+                return syntax;
+            }
+
+            return new LocalVariableSyntax(name);
+        }
+        
+        void ISyntaxVisitor.VisitLocalVariableSyntax(LocalVariableSyntax syntax) => ReplaceCurrent(syntax, ReplaceLocalVariableSyntax);
+
         protected virtual TargetScopeSyntax ReplaceTargetScopeSyntax(TargetScopeSyntax syntax)
         {
             var hasChanges = Rewrite(syntax.LeadingNodes, out var leadingNodes);
@@ -556,7 +569,7 @@ namespace Bicep.Core.Syntax
         {
             var hasChanges = Rewrite(syntax.OpenSquare, out var openSquare);
             hasChanges |= Rewrite(syntax.ForKeyword, out var forKeyword);
-            hasChanges |= Rewrite(syntax.Identifier, out var identifier);
+            hasChanges |= Rewrite(syntax.ItemVariable, out var itemVariable);
             hasChanges |= Rewrite(syntax.InKeyword, out var inKeyword);
             hasChanges |= Rewrite(syntax.Expression, out var expression);
             hasChanges |= Rewrite(syntax.Colon, out var colon);
@@ -568,7 +581,7 @@ namespace Bicep.Core.Syntax
                 return syntax;
             }
 
-            return new ForSyntax(openSquare, forKeyword, identifier, inKeyword, expression, colon, body, closeSquare);
+            return new ForSyntax(openSquare, forKeyword, itemVariable, inKeyword, expression, colon, body, closeSquare);
         }
 
         void ISyntaxVisitor.VisitForSyntax(ForSyntax syntax) => ReplaceCurrent(syntax, ReplaceForSyntax);

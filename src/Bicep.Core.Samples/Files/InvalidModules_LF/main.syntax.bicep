@@ -1691,8 +1691,9 @@ module expectedLoopVar 'modulea.bicep' = [for]
 //@[41:46)  ForSyntax
 //@[41:42)   LeftSquare |[|
 //@[42:45)   Identifier |for|
-//@[45:45)   IdentifierSyntax
-//@[45:45)    SkippedTriviaSyntax
+//@[45:45)   LocalVariableSyntax
+//@[45:45)    IdentifierSyntax
+//@[45:45)     SkippedTriviaSyntax
 //@[45:45)   SkippedTriviaSyntax
 //@[45:45)   SkippedTriviaSyntax
 //@[45:45)   SkippedTriviaSyntax
@@ -1711,8 +1712,9 @@ module expectedInKeyword 'modulea.bicep' = [for x]
 //@[43:50)  ForSyntax
 //@[43:44)   LeftSquare |[|
 //@[44:47)   Identifier |for|
-//@[48:49)   IdentifierSyntax
-//@[48:49)    Identifier |x|
+//@[48:49)   LocalVariableSyntax
+//@[48:49)    IdentifierSyntax
+//@[48:49)     Identifier |x|
 //@[49:49)   SkippedTriviaSyntax
 //@[49:49)   SkippedTriviaSyntax
 //@[49:49)   SkippedTriviaSyntax
@@ -1731,8 +1733,9 @@ module expectedInKeyword2 'modulea.bicep' = [for x b]
 //@[44:53)  ForSyntax
 //@[44:45)   LeftSquare |[|
 //@[45:48)   Identifier |for|
-//@[49:50)   IdentifierSyntax
-//@[49:50)    Identifier |x|
+//@[49:50)   LocalVariableSyntax
+//@[49:50)    IdentifierSyntax
+//@[49:50)     Identifier |x|
 //@[51:52)   SkippedTriviaSyntax
 //@[51:52)    Identifier |b|
 //@[52:52)   SkippedTriviaSyntax
@@ -1752,8 +1755,9 @@ module expectedArrayExpression 'modulea.bicep' = [for x in]
 //@[49:59)  ForSyntax
 //@[49:50)   LeftSquare |[|
 //@[50:53)   Identifier |for|
-//@[54:55)   IdentifierSyntax
-//@[54:55)    Identifier |x|
+//@[54:55)   LocalVariableSyntax
+//@[54:55)    IdentifierSyntax
+//@[54:55)     Identifier |x|
 //@[56:58)   Identifier |in|
 //@[58:58)   SkippedTriviaSyntax
 //@[58:58)   SkippedTriviaSyntax
@@ -1772,8 +1776,9 @@ module expectedColon 'modulea.bicep' = [for x in y]
 //@[39:51)  ForSyntax
 //@[39:40)   LeftSquare |[|
 //@[40:43)   Identifier |for|
-//@[44:45)   IdentifierSyntax
-//@[44:45)    Identifier |x|
+//@[44:45)   LocalVariableSyntax
+//@[44:45)    IdentifierSyntax
+//@[44:45)     Identifier |x|
 //@[46:48)   Identifier |in|
 //@[49:50)   VariableAccessSyntax
 //@[49:50)    IdentifierSyntax
@@ -1794,8 +1799,9 @@ module expectedLoopBody 'modulea.bicep' = [for x in y:]
 //@[42:55)  ForSyntax
 //@[42:43)   LeftSquare |[|
 //@[43:46)   Identifier |for|
-//@[47:48)   IdentifierSyntax
-//@[47:48)    Identifier |x|
+//@[47:48)   LocalVariableSyntax
+//@[47:48)    IdentifierSyntax
+//@[47:48)     Identifier |x|
 //@[49:51)   Identifier |in|
 //@[52:53)   VariableAccessSyntax
 //@[52:53)    IdentifierSyntax
@@ -1818,8 +1824,9 @@ module wrongLoopBodyType 'modulea.bicep' = [for x in y:4]
 //@[43:57)  ForSyntax
 //@[43:44)   LeftSquare |[|
 //@[44:47)   Identifier |for|
-//@[48:49)   IdentifierSyntax
-//@[48:49)    Identifier |x|
+//@[48:49)   LocalVariableSyntax
+//@[48:49)    IdentifierSyntax
+//@[48:49)     Identifier |x|
 //@[50:52)   Identifier |in|
 //@[53:54)   VariableAccessSyntax
 //@[53:54)    IdentifierSyntax
@@ -1841,8 +1848,9 @@ module missingLoopBodyProperties 'modulea.bicep' = [for x in y:{
 //@[51:68)  ForSyntax
 //@[51:52)   LeftSquare |[|
 //@[52:55)   Identifier |for|
-//@[56:57)   IdentifierSyntax
-//@[56:57)    Identifier |x|
+//@[56:57)   LocalVariableSyntax
+//@[56:57)    IdentifierSyntax
+//@[56:57)     Identifier |x|
 //@[58:60)   Identifier |in|
 //@[61:62)   VariableAccessSyntax
 //@[61:62)    IdentifierSyntax
@@ -1930,8 +1938,9 @@ module storageResources 'modulea.bicep' = [for module in myModules: {
 //@[42:182)  ForSyntax
 //@[42:43)   LeftSquare |[|
 //@[43:46)   Identifier |for|
-//@[47:53)   IdentifierSyntax
-//@[47:53)    Identifier |module|
+//@[47:53)   LocalVariableSyntax
+//@[47:53)    IdentifierSyntax
+//@[47:53)     Identifier |module|
 //@[54:56)   Identifier |in|
 //@[57:66)   VariableAccessSyntax
 //@[57:66)    IdentifierSyntax

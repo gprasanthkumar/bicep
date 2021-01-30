@@ -3985,8 +3985,9 @@ resource expectedLoopVar 'Microsoft.Storage/storageAccounts@2019-06-01' = [for]
 //@[74:79)  ForSyntax
 //@[74:75)   LeftSquare |[|
 //@[75:78)   Identifier |for|
-//@[78:78)   IdentifierSyntax
-//@[78:78)    SkippedTriviaSyntax
+//@[78:78)   LocalVariableSyntax
+//@[78:78)    IdentifierSyntax
+//@[78:78)     SkippedTriviaSyntax
 //@[78:78)   SkippedTriviaSyntax
 //@[78:78)   SkippedTriviaSyntax
 //@[78:78)   SkippedTriviaSyntax
@@ -4005,8 +4006,9 @@ resource expectedInKeyword 'Microsoft.Storage/storageAccounts@2019-06-01' = [for
 //@[76:83)  ForSyntax
 //@[76:77)   LeftSquare |[|
 //@[77:80)   Identifier |for|
-//@[81:82)   IdentifierSyntax
-//@[81:82)    Identifier |x|
+//@[81:82)   LocalVariableSyntax
+//@[81:82)    IdentifierSyntax
+//@[81:82)     Identifier |x|
 //@[82:82)   SkippedTriviaSyntax
 //@[82:82)   SkippedTriviaSyntax
 //@[82:82)   SkippedTriviaSyntax
@@ -4025,8 +4027,9 @@ resource expectedInKeyword2 'Microsoft.Storage/storageAccounts@2019-06-01' = [fo
 //@[77:86)  ForSyntax
 //@[77:78)   LeftSquare |[|
 //@[78:81)   Identifier |for|
-//@[82:83)   IdentifierSyntax
-//@[82:83)    Identifier |x|
+//@[82:83)   LocalVariableSyntax
+//@[82:83)    IdentifierSyntax
+//@[82:83)     Identifier |x|
 //@[84:85)   SkippedTriviaSyntax
 //@[84:85)    Identifier |b|
 //@[85:85)   SkippedTriviaSyntax
@@ -4046,8 +4049,9 @@ resource expectedArrayExpression 'Microsoft.Storage/storageAccounts@2019-06-01' 
 //@[82:92)  ForSyntax
 //@[82:83)   LeftSquare |[|
 //@[83:86)   Identifier |for|
-//@[87:88)   IdentifierSyntax
-//@[87:88)    Identifier |x|
+//@[87:88)   LocalVariableSyntax
+//@[87:88)    IdentifierSyntax
+//@[87:88)     Identifier |x|
 //@[89:91)   Identifier |in|
 //@[91:91)   SkippedTriviaSyntax
 //@[91:91)   SkippedTriviaSyntax
@@ -4066,8 +4070,9 @@ resource expectedColon 'Microsoft.Storage/storageAccounts@2019-06-01' = [for x i
 //@[72:84)  ForSyntax
 //@[72:73)   LeftSquare |[|
 //@[73:76)   Identifier |for|
-//@[77:78)   IdentifierSyntax
-//@[77:78)    Identifier |x|
+//@[77:78)   LocalVariableSyntax
+//@[77:78)    IdentifierSyntax
+//@[77:78)     Identifier |x|
 //@[79:81)   Identifier |in|
 //@[82:83)   VariableAccessSyntax
 //@[82:83)    IdentifierSyntax
@@ -4088,8 +4093,9 @@ resource expectedLoopBody 'Microsoft.Storage/storageAccounts@2019-06-01' = [for 
 //@[75:88)  ForSyntax
 //@[75:76)   LeftSquare |[|
 //@[76:79)   Identifier |for|
-//@[80:81)   IdentifierSyntax
-//@[80:81)    Identifier |x|
+//@[80:81)   LocalVariableSyntax
+//@[80:81)    IdentifierSyntax
+//@[80:81)     Identifier |x|
 //@[82:84)   Identifier |in|
 //@[85:86)   VariableAccessSyntax
 //@[85:86)    IdentifierSyntax
@@ -4112,8 +4118,9 @@ resource wrongLoopBodyType 'Microsoft.Storage/storageAccounts@2019-06-01' = [for
 //@[76:90)  ForSyntax
 //@[76:77)   LeftSquare |[|
 //@[77:80)   Identifier |for|
-//@[81:82)   IdentifierSyntax
-//@[81:82)    Identifier |x|
+//@[81:82)   LocalVariableSyntax
+//@[81:82)    IdentifierSyntax
+//@[81:82)     Identifier |x|
 //@[83:85)   Identifier |in|
 //@[86:87)   VariableAccessSyntax
 //@[86:87)    IdentifierSyntax
@@ -4135,8 +4142,9 @@ resource missingLoopBodyProperties 'Microsoft.Storage/storageAccounts@2019-06-01
 //@[84:103)  ForSyntax
 //@[84:85)   LeftSquare |[|
 //@[85:88)   Identifier |for|
-//@[89:90)   IdentifierSyntax
-//@[89:90)    Identifier |x|
+//@[89:90)   LocalVariableSyntax
+//@[89:90)    IdentifierSyntax
+//@[89:90)     Identifier |x|
 //@[91:93)   Identifier |in|
 //@[94:95)   VariableAccessSyntax
 //@[94:95)    IdentifierSyntax
@@ -4224,8 +4232,9 @@ resource storageResources 'Microsoft.Storage/storageAccounts@2019-06-01' = [for 
 //@[75:227)  ForSyntax
 //@[75:76)   LeftSquare |[|
 //@[76:79)   Identifier |for|
-//@[80:87)   IdentifierSyntax
-//@[80:87)    Identifier |account|
+//@[80:87)   LocalVariableSyntax
+//@[80:87)    IdentifierSyntax
+//@[80:87)     Identifier |account|
 //@[88:90)   Identifier |in|
 //@[91:106)   VariableAccessSyntax
 //@[91:106)    IdentifierSyntax

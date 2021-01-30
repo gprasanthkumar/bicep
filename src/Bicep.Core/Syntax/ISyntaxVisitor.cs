@@ -68,6 +68,8 @@ namespace Bicep.Core.Syntax
 
         void VisitVariableDeclarationSyntax(VariableDeclarationSyntax syntax);
 
+        void VisitLocalVariableSyntax(LocalVariableSyntax syntax);
+
         void VisitIfConditionSyntax(IfConditionSyntax syntax);
 
         void VisitForSyntax(ForSyntax syntax);

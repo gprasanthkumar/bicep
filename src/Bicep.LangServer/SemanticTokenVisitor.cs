@@ -151,7 +151,7 @@ namespace Bicep.LanguageServer
         public override void VisitForSyntax(ForSyntax syntax)
         {
             AddTokenType(syntax.ForKeyword, SemanticTokenType.Keyword);
-            AddTokenType(syntax.Identifier, SemanticTokenType.Variable);
+            AddTokenType(syntax.ItemVariable.Name, SemanticTokenType.Variable);
             AddContextualKeyword(syntax.InKeyword, LanguageConstants.InKeyword);
             base.VisitForSyntax(syntax);
         }

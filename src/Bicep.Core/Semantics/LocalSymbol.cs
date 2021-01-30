@@ -8,8 +8,8 @@ namespace Bicep.Core.Semantics
 {
     public class LocalSymbol : DeclaredSymbol
     {
-        public LocalSymbol(ISymbolContext context, string name, IdentifierSyntax declaringSyntax)
-            : base(context, name, declaringSyntax, declaringSyntax)
+        public LocalSymbol(ISymbolContext context, string name, LocalVariableSyntax declaringSyntax)
+            : base(context, name, declaringSyntax, declaringSyntax.Name)
         {
         }
 
