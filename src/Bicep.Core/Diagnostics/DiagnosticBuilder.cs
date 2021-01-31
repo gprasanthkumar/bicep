@@ -713,42 +713,42 @@ namespace Bicep.Core.Diagnostics
                 "BCP122",
                 $"Modules: {ToQuotedString(moduleNames)} are defined with this same name and this same scope in a file. Rename them or split into different modules.");
 
-            public ErrorDiagnostic ExpectedNamespaceOrDecoratorName() => new ErrorDiagnostic(
+            public ErrorDiagnostic ExpectedNamespaceOrDecoratorName() => newbut(
                 TextSpan,
                 "BCP123",
                 "Expected a namespace or decorator name at this location.");
 
-            public ErrorDiagnostic CannotAttacheDecoratorToTarget(string decoratorName, TypeSymbol attachableType, TypeSymbol targetType) => new ErrorDiagnostic(
+            public ErrorDiagnostic CannotAttacheDecoratorToTarget(string decoratorName, TypeSymbol attachableType, TypeSymbol targetType) => new(
                 TextSpan,
                 "BCP124",
                 $"The decorator \"{decoratorName}\" can only be attached to targets of type \"{attachableType}\", but the target has type \"{targetType}\".");
 
-            public ErrorDiagnostic CannotUseFunctionAsParameterDecorator(string functionName) => new ErrorDiagnostic(
+            public ErrorDiagnostic CannotUseFunctionAsParameterDecorator(string functionName) => new(
                 TextSpan,
                 "BCP125",
                 $"Function \"{functionName}\" cannot be used as a parameter decorator.");
 
-            public ErrorDiagnostic CannotUseFunctionAsVariableDecorator(string functionName) => new ErrorDiagnostic(
+            public ErrorDiagnostic CannotUseFunctionAsVariableDecorator(string functionName) => new(
                 TextSpan,
                 "BCP126",
                 $"Function \"{functionName}\" cannot be used as a variable decorator.");
 
-            public ErrorDiagnostic CannotUseFunctionAsResourceDecorator(string functionName) => new ErrorDiagnostic(
+            public ErrorDiagnostic CannotUseFunctionAsResourceDecorator(string functionName) => new(
                 TextSpan,
                 "BCP127",
                 $"Function \"{functionName}\" cannot be used as a resource decorator.");
 
-            public ErrorDiagnostic CannotUseFunctionAsModuleDecorator(string functionName) => new ErrorDiagnostic(
+            public ErrorDiagnostic CannotUseFunctionAsModuleDecorator(string functionName) => new(
                 TextSpan,
                 "BCP128",
                 $"Function \"{functionName}\" cannot be used as a module decorator.");
 
-            public ErrorDiagnostic CannotUseFunctionAsOuputDecorator(string functionName) => new ErrorDiagnostic(
+            public ErrorDiagnostic CannotUseFunctionAsOuputDecorator(string functionName) => new(
                 TextSpan,
                 "BCP129",
                 $"Function \"{functionName}\" cannot be used as an output decorator.");
 
-            public ErrorDiagnostic DecoratorsNotAllowed() => new ErrorDiagnostic(
+            public ErrorDiagnostic DecoratorsNotAllowed() => new(
                 TextSpan,
                 "BCP130",
                 "Decorators are not allowed here.");
@@ -767,6 +767,11 @@ namespace Bicep.Core.Diagnostics
                 TextSpan,
                 "BCP133",
                 "Expected a loop variable identifier at this location.");
+
+            public ErrorDiagnostic LoopArrayExpressionTypeMismatch(TypeSymbol actualType) => new(
+                TextSpan,
+                "BCP134",
+                $"Loop expected an expression of type \"{LanguageConstants.Array}\" but the provided value is of type \"{actualType}\".");
         }
 
         public static DiagnosticBuilderInternal ForPosition(TextSpan span)

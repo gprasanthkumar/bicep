@@ -129,7 +129,7 @@ namespace Bicep.Core.TypeSystem
             });
 
         public override void VisitLocalVariableSyntax(LocalVariableSyntax syntax)
-            => AssignTypeWithDiagnostics(syntax, diagnostics =>
+            => AssignType(syntax, () =>
             {
                 var parent = this.binder.GetParent(syntax);
                 switch (parent)
@@ -159,9 +159,32 @@ namespace Bicep.Core.TypeSystem
             });
 
         public override void VisitForSyntax(ForSyntax syntax)
-            => AssignTypeWithDiagnostics(syntax, diagnostics =>
+            => AssignType(syntax, () =>
             {
-                
+                var errors = new List<ErrorDiagnostic>();
+
+                var loopItemType = typeManager.GetTypeInfo(syntax.ItemVariable);
+                CollectErrors(errors, loopItemType);
+
+                var arrayExpressionType = typeManager.GetTypeInfo(syntax.Expression);
+                CollectErrors(errors, arrayExpressionType);
+
+                var bodyType = typeManager.GetTypeInfo(syntax.Body);
+                CollectErrors(errors, bodyType);
+
+                if (PropagateErrorType(errors, loopItemType, arrayExpressionType, bodyType))
+                {
+                    return ErrorType.Create(errors);
+                }
+
+                if (!TypeValidator.AreTypesAssignable(arrayExpressionType, LanguageConstants.Array))
+                {
+                    // the array expression isn't actually an array
+                    return ErrorType.Create(DiagnosticBuilder.ForPosition(syntax.Expression).LoopArrayExpressionTypeMismatch(arrayExpressionType));
+                }
+
+                // the return type of a loop is the array of the body type
+                return new TypedArrayType(bodyType, TypeSymbolValidationFlags.Default);
             });
 
         public override void VisitResourceDeclarationSyntax(ResourceDeclarationSyntax syntax)
@@ -169,7 +192,7 @@ namespace Bicep.Core.TypeSystem
             {
                 var declaredType = syntax.GetDeclaredType(binder.TargetScope, resourceTypeProvider);
 
-                this.ValidateDecortors(syntax.Decorators, declaredType, diagnostics);
+                this.ValidateDecorators(syntax.Decorators, declaredType, diagnostics);
 
                 if (declaredType is ErrorType)
                 {
@@ -199,7 +222,7 @@ namespace Bicep.Core.TypeSystem
 
                 var declaredType = syntax.GetDeclaredType(this.binder.TargetScope, moduleSemanticModel);
 
-                this.ValidateDecortors(syntax.Decorators, declaredType, diagnostics);
+                this.ValidateDecorators(syntax.Decorators, declaredType, diagnostics);
 
                 if (moduleSemanticModel.HasErrors())
                 {
@@ -213,7 +236,7 @@ namespace Bicep.Core.TypeSystem
             => AssignTypeWithDiagnostics(syntax, diagnostics => {
                 var declaredType = syntax.GetDeclaredType();
 
-                this.ValidateDecortors(syntax.Decorators, declaredType, diagnostics);
+                this.ValidateDecorators(syntax.Decorators, declaredType, diagnostics);
 
                 if (syntax.Modifier != null)
                 {
@@ -248,7 +271,7 @@ namespace Bicep.Core.TypeSystem
                 return assignedType;
             });
 
-        private void ValidateDecortors(IEnumerable<DecoratorSyntax> decoratorSyntaxes, TypeSymbol targetType, IDiagnosticWriter diagnostics)
+        private void ValidateDecorators(IEnumerable<DecoratorSyntax> decoratorSyntaxes, TypeSymbol targetType, IDiagnosticWriter diagnostics)
         {
             foreach (var decoratorSyntax in decoratorSyntaxes)
             {
@@ -307,7 +330,7 @@ namespace Bicep.Core.TypeSystem
                     return ErrorType.Create(DiagnosticBuilder.ForPosition(syntax.Value).VariableTypeAssignmentDisallowed(valueType));
                 }
 
-                this.ValidateDecortors(syntax.Decorators, valueType, diagnostics);
+                this.ValidateDecorators(syntax.Decorators, valueType, diagnostics);
 
                 return valueType;
             });
@@ -325,7 +348,7 @@ namespace Bicep.Core.TypeSystem
                     return ErrorType.Create(DiagnosticBuilder.ForPosition(syntax.Type).InvalidOutputType());
                 }
 
-                this.ValidateDecortors(syntax.Decorators, primitiveType, diagnostics);
+                this.ValidateDecorators(syntax.Decorators, primitiveType, diagnostics);
 
                 var currentDiagnostics = GetOutputDeclarationDiagnostics(primitiveType, syntax);
 
