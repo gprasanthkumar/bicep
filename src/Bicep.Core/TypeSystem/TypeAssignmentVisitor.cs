@@ -128,6 +128,42 @@ namespace Bicep.Core.TypeSystem
                 return this.typeManager.GetTypeInfo(syntax.Body);
             });
 
+        public override void VisitLocalVariableSyntax(LocalVariableSyntax syntax)
+            => AssignTypeWithDiagnostics(syntax, diagnostics =>
+            {
+                var parent = this.binder.GetParent(syntax);
+                switch (parent)
+                {
+                    case ForSyntax @for when ReferenceEquals(syntax, @for.ItemVariable):
+                        // this local variable is a loop item variable
+                        // we should return item type of the array (if feasible)
+
+                        // get type of the loop array expression
+                        // (this shouldn't cause a stack overflow because it's a peer node of this one)
+                        var arrayExpressionType = this.typeManager.GetTypeInfo(@for.Expression);
+
+                        if (arrayExpressionType.TypeKind == TypeKind.Any || arrayExpressionType is not ArrayType arrayType)
+                        {
+                            // the array is of "any" type or the loop array expression isn't actually an array
+                            // in the former case, there isn't much we can do
+                            // in the latter case, we will let the ForSyntax type check rules produce the error for it
+                            return LanguageConstants.Any;
+                        }
+
+                        // the array expression is actually an array
+                        return arrayType.Item;
+
+                    default:
+                        throw new InvalidOperationException($"{syntax.GetType().Name} at {syntax.Span} has an unexpected parent of type {parent?.GetType().Name}");
+                }
+            });
+
+        public override void VisitForSyntax(ForSyntax syntax)
+            => AssignTypeWithDiagnostics(syntax, diagnostics =>
+            {
+                
+            });
+
         public override void VisitResourceDeclarationSyntax(ResourceDeclarationSyntax syntax)
             => AssignTypeWithDiagnostics(syntax, diagnostics =>
             {

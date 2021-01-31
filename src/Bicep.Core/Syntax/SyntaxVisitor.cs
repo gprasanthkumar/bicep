@@ -74,7 +74,7 @@ namespace Bicep.Core.Syntax
             this.Visit(syntax.Value);
         }
 
-        public void VisitLocalVariableSyntax(LocalVariableSyntax syntax)
+        public virtual void VisitLocalVariableSyntax(LocalVariableSyntax syntax)
         {
             this.Visit(syntax.Name);
         }
